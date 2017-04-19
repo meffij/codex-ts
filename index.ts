@@ -1,6 +1,6 @@
-var rest = require("restify");
-var derp1 = () => 0;
+import * as redux from "redux";
 
 import * as datatypes from './datatypes';
-export { derp1 };
-export { CardData } from "./datatypes";
+import reducer from './mainreducer';
+
+redux.createStore(reducer);
