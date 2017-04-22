@@ -1,3 +1,4 @@
+import { GameError } from './gameerror';
 export type color =
   'Neutral' |
   'Red' |
@@ -55,13 +56,25 @@ export interface UnitCardData extends CardData {
   HP : number;
 }
 
+export interface TechBuilding {
+  hasBeenBuilt : boolean;
+  health : number;
+};
+
 export interface PlayerData {
+  gold : number;
+  baseHealth : number;
   hand : [CardInstance];
   deck : [CardInstance];
   codex : [CardInstance];
+  tech1Building? : TechBuilding;
+  tech2Spec? : Spec;
+  tech2Building? : TechBuilding;
+  tech3Building? : TechBuilding;
 };
 
 export interface GameData {
+  error? : GameError;
   currentPhase : Phase;
   players : [PlayerData];
 };
