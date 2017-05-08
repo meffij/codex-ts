@@ -1,0 +1,7 @@
+--compilers ts:ts-node/register,tsx:ts-node/register
+-r source-map-support/register
+-r ts-node/register
+--watch-extensions ts,tsx
+--watch
+--reporter min
+src/test.spec.ts

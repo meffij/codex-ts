@@ -1,0 +1,6 @@
+{
+  "execmap" : {
+    "ts" : "./node_modules/.bin/ts-node",
+    "tsx" : "./node_modules/.bin/ts-node"
+  }
+}

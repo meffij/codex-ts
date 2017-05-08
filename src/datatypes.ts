@@ -76,5 +76,6 @@ export interface PlayerData {
 export interface GameData {
   error? : GameError;
   currentPhase : Phase;
+  currentPlayer : number;
   players : [PlayerData];
 };
