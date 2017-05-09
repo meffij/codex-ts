@@ -5,6 +5,7 @@
         "noImplicitAny": false,
         "lib" : ["es6"],
         "typeRoots" : ["node_modules/@types"],
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "outDir" : "build"
     }
 }

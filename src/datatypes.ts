@@ -1,5 +1,6 @@
 import { GameError } from './gameerror';
-export type color =
+import { GameEvent } from './event';
+export type Color =
   'Neutral' |
   'Red' |
   'Green'
@@ -9,6 +10,13 @@ export type Spec =
   'Bashing' |
   'Finesse'
 ;
+
+export type TechLevel =
+  0 | 1 | 2 | 3;
+
+export function specToColor(s : Spec) : Color {
+  return 'Neutral';
+};
 
 export type Phase =
   'Tech' |
@@ -26,28 +34,45 @@ export type CardType =
   'Upgrade'
 ;
 
+export type Subtype =
+  'Virtuoso' |
+  'Burn' |
+  'Buff' |
+  'Debuff' |
+  'Cute Animal' |
+  'Mercenary'
+;
+
 export type EffectType =
-  "+1+1 Rune" |
-  "-1-1 Rune" |
-  "Sparkshot"
+  '+1+1 Rune' |
+  '-1-1 Rune' |
+  'Sparkshot' |
+  'Haste' |
+  'Healing'
 ;
 
 export interface Effect {
   timestamp : number;
-  target : number;
+  target? : number;
   type : EffectType;
+};
+
+export function KWEffect(type : EffectType) {
+  return { type, timestamp : 0, target : 0 };
 };
 
 export interface CardData {
   name : string;
   cost : number;
-  color : color;
+  color : Color;
   type : CardType;
+  effects? : [Effect];
+  subtypes? : [Subtype]
 }
 
 export interface CardInstance {
   readonly data : CardData;
-  readonly timestamp : number;
+  readonly CUID : number;
 }
 
 export interface UnitCardData extends CardData {
@@ -56,13 +81,40 @@ export interface UnitCardData extends CardData {
   HP : number;
 }
 
+export interface SpellCardData extends CardData {
+  type : 'Spell';
+}
+
+export interface BuildingCardData extends CardData {
+  type : 'Building';
+  HP : number;
+}
+
+export interface HeroBand {
+  level : number;
+  ATK : number;
+  HP : number;
+  effects? : [Effect];
+};
+
+export interface HeroData {
+  name : string;
+  cost : number;
+  spec : Spec;
+  minband : HeroBand;
+  midband : HeroBand;
+  maxband : HeroBand;
+};
+
+
 export interface TechBuilding {
-  hasBeenBuilt : boolean;
   health : number;
+  disabled? : boolean;
 };
 
 export interface PlayerData {
   gold : number;
+  workers : number;
   baseHealth : number;
   hand : [CardInstance];
   deck : [CardInstance];
@@ -75,6 +127,9 @@ export interface PlayerData {
 
 export interface GameData {
   error? : GameError;
+  winner? : number;
+  pending? : [GameEvent];
+  eventQueue? : [GameEvent];
   currentPhase : Phase;
   currentPlayer : number;
   players : [PlayerData];

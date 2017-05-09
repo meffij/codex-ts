@@ -2,9 +2,13 @@ import { Spec } from './datatypes';
 
 export type ActionType =
   "init" |
-  "Resign" |
   "StartSingleSpecGame"
 ;
+
+export interface ResignAction {
+  type : 'Resign';
+  player : number;
+};
 
 export interface ModifyGoldAction {
   type : 'modifyGold';
@@ -30,5 +34,6 @@ export type GameAction =
   SimpleAction |
   ModifyGoldAction |
   ChooseSpecAction |
-  MakeWorkerAction
+  MakeWorkerAction |
+  ResignAction
 ;
